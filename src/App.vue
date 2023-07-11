@@ -10,7 +10,7 @@
   import { useDashboardsStore } from '@connecthing.io/davra-ui'
   import { onMounted } from 'vue';
     onMounted( () => {
-      const dashbaordStore = useDashboardsStore()
-      dashbaordStore.dashboardsPagePath = '/dashboards'
+      const dashbaordsStore = useDashboardsStore()
+      dashbaordsStore.dashboardsPagePath = '/dashboards'
     })
 </script>

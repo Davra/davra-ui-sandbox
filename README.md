@@ -1,5 +1,11 @@
 # essentials
 
+## ENV 
+
+Make a copy of the env.template file named env.local
+
+Change the default ENV variables to macth your tenant 
+
 ## Project setup
 
 ```
