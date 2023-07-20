@@ -9,12 +9,12 @@
     "lint": "eslint . --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@connecthing.io/davra-ui": "0.1.2",
+    "@connecthing.io/davra-ui": "0.1.3",
     "@mdi/font": "7.0.96",
     "core-js": "^3.29.0",
     "pinia": "^2.0.0",
     "roboto-fontface": "*",
-    "vue": "^3.2.0",
+    "vue": "^3.3.4",
     "vue-router": "^4.0.0",
     "vuetify": "3.3.4",
     "webfontloader": "^1.0.0"
