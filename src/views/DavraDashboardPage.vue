@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import { DashboardPage, DashboardDrawer, } from '@connecthing.io/davra-ui'
+import { DashboardPage, DashboardDrawer, DashboardEditWidgetModal, DashboardGridItem } from '@connecthing.io/davra-ui'
 
 const props = defineProps<{ uuid: string }>()
 </script>
@@ -51,6 +51,33 @@ const props = defineProps<{ uuid: string }>()
           <v-chip color="pink" class="ma-3"> #post-widget-window </v-chip>
         </template>
       </DashboardDrawer>
+    </template>
+
+    <template #dashboard-grid-item="{ item, filters, isEditing, update, remove, duplicate, addRef }">
+
+      <DashboardGridItem v-if="item.i !== -2" :ref="(el) => addRef(el, item.i)" :model-value="item" :filters="filters"
+        :is-editing="isEditing" @update:model-value="update" @removeWidget="remove" @duplicateWidget="duplicate">
+
+        <template #dashboard-edit-widget-modal="editWidgetProps">
+
+          <DashboardEditWidgetModal :ref="(el) => editWidgetProps.setModalRef(el)" v-model="editWidgetProps.widget" :filters="editWidgetProps.filters"
+            @remove-widget="remove(editWidgetProps.widget)">
+
+            <template #toolbar-append="{ dismissConfig, saveConfig }">
+              <v-btn size="small" color="white" variant="text" @click="dismissConfig">
+                Cancel
+              </v-btn>
+              <v-btn size="small" class="mx-3 bg-white" color="pink" variant="outlined" @click="saveConfig">
+                Save Config
+              </v-btn>
+            </template>
+
+          </DashboardEditWidgetModal>
+
+        </template>
+        
+      </DashboardGridItem>
+
     </template>
   </DashboardPage>
 </template>
