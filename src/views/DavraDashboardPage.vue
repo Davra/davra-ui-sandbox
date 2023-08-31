@@ -1,14 +1,22 @@
 
 <script setup lang="ts">
 import { DashboardPage, DashboardDrawer, DashboardEditWidgetModal, DashboardGridItem } from '@connecthing.io/davra-ui'
-
+import { onMounted,ref } from 'vue'
 const props = defineProps<{ uuid: string }>()
+
+const dashPage = ref(null)
+
+onMounted(() => {
+  console.log(dashPage.value)
+
+})
 </script>
 
 <template>
-  <DashboardPage :uuid="props.uuid">
-    <template #drawer="drawerProps">
 
+  <DashboardPage ref="dashPage" :uuid="props.uuid" default-view-mode >
+    <template #drawer="drawerProps">
+      
       <DashboardDrawer v-model:isEditing="drawerProps.isEditing" @drag="drawerProps.drag" @dragend="drawerProps.dragend"
         @clicked="drawerProps.clicked">
         <template #pre-widget-window>
@@ -53,15 +61,15 @@ const props = defineProps<{ uuid: string }>()
       </DashboardDrawer>
     </template>
 
-    <template #dashboard-grid-item="{ item, filters, isEditing, update, remove, duplicate, addRef }">
+    <template #dashboard-grid-item="dashboardGridItemsProps">
 
-      <DashboardGridItem v-if="item.i !== -2" :ref="(el) => addRef(el, item.i)" :model-value="item" :filters="filters"
-        :is-editing="isEditing" @update:model-value="update" @removeWidget="remove" @duplicateWidget="duplicate">
+      <DashboardGridItem v-if="dashboardGridItemsProps.item.i !== -2" :ref="(el:any) => dashboardGridItemsProps.addRef(el, dashboardGridItemsProps.item.i)" :model-value="dashboardGridItemsProps.item" :filters="dashboardGridItemsProps.filters"
+        :is-editing="dashboardGridItemsProps.isEditing" @update:model-value="dashboardGridItemsProps.update" @removeWidget="dashboardGridItemsProps.remove" @duplicateWidget="dashboardGridItemsProps.duplicate">
 
-        <template #dashboard-edit-widget-modal="editWidgetProps">
+         <template #dashboard-edit-widget-modal="editWidgetProps">
 
-          <DashboardEditWidgetModal :ref="(el) => editWidgetProps.setModalRef(el)" v-model="editWidgetProps.widget" :filters="editWidgetProps.filters"
-            @remove-widget="remove(editWidgetProps.widget)">
+          <DashboardEditWidgetModal :ref="(el:any) => editWidgetProps.setModalRef(el)" v-model="editWidgetProps.widget" :filters="editWidgetProps.filters"
+            @remove-widget="dashboardGridItemsProps.remove(editWidgetProps.widget)" @update:model-value="dashboardGridItemsProps.update" >
 
             <template #toolbar-append="{ dismissConfig, saveConfig }">
               <v-btn size="small" color="white" variant="text" @click="dismissConfig">
@@ -74,7 +82,7 @@ const props = defineProps<{ uuid: string }>()
 
           </DashboardEditWidgetModal>
 
-        </template>
+        </template> 
         
       </DashboardGridItem>
 
